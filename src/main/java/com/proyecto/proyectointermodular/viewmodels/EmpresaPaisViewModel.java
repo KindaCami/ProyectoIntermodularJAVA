@@ -1,6 +1,7 @@
 package com.proyecto.proyectointermodular.viewmodels;
 
 public class EmpresaPaisViewModel {
+
     private String empresaId;
     private String empresaNombre;
     private String paisId;
@@ -13,35 +14,14 @@ public class EmpresaPaisViewModel {
         this.paisNombre = paisNombre;
     }
 
-    public String getEmpresaId() {
-        return empresaId;
-    }
+    public String getEmpresaId() { return empresaId; }
+    public String getEmpresaNombre() { return empresaNombre; }
+    public String getPaisId() { return paisId; }
+    public String getPaisNombre() { return paisNombre; }
 
-    public void setEmpresaId(String empresaId) {
-        this.empresaId = empresaId;
-    }
-
-    public String getEmpresaNombre() {
-        return empresaNombre;
-    }
-
-    public void setEmpresaNombre(String empresaNombre) {
-        this.empresaNombre = empresaNombre;
-    }
-
-    public String getPaisId() {
-        return paisId;
-    }
-
-    public void setPaisId(String paisId) {
-        this.paisId = paisId;
-    }
-
-    public String getPaisNombre() {
-        return paisNombre;
-    }
-
-    public void setPaisNombre(String paisNombre) {
-        this.paisNombre = paisNombre;
-    }
+    public void setEmpresaId(String empresaId) { this.empresaId = empresaId; }
+    public void setEmpresaNombre(String empresaNombre) { this.empresaNombre = empresaNombre; }
+    public void setPaisId(String paisId) { this.paisId = paisId; }
+    public void setPaisNombre(String paisNombre) { this.paisNombre = paisNombre; }
 }
+

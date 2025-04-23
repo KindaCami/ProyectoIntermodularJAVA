@@ -5,6 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ *  Este archivo es una plantilla para la conexión a base de datos.
+ * Sustituye los valores de USER, PASSWORD y URL por los tuyos.
+ * Para no subir mis credenciales a GitHub.
+ */
+
 public class BBDDConnector {
     private static BBDDConnector instance = null;
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/proyectointermodular?autoReconnect=true&useSSL=false";
@@ -12,11 +18,12 @@ public class BBDDConnector {
 
     private final Properties props;
 
+
     // Constructor privado
     private BBDDConnector() {
         props = new Properties();
-        props.setProperty("user", "root");
-        props.setProperty("password", "1234");
+        props.setProperty("user", "");
+        props.setProperty("password", "");
 
         conectar();
     }
@@ -27,7 +34,7 @@ public class BBDDConnector {
             connection = DriverManager.getConnection(JDBC_URL, props);
             System.out.println("✅ Conexión exitosa a la base de datos.");
         } catch (SQLException e) {
-            System.out.println("❌ Error al conectar con la base de datos:");
+            System.out.println(" Error al conectar con la base de datos:");
             e.printStackTrace();
         }
     }
