@@ -26,6 +26,11 @@ public class ContratoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+
         String action = request.getParameter("action");
         if (action == null) action = "list";
 
@@ -53,6 +58,11 @@ public class ContratoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+
         String action = request.getParameter("action");
 
         try {
@@ -65,7 +75,7 @@ public class ContratoController extends HttpServlet {
             throw new ServletException(e);
         }
     }
-
+     // Redireccion a JSP para ver lista
     private void listContratos(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         List<Contrato> contratos = contratoDAO.listarContratos();
@@ -96,7 +106,7 @@ public class ContratoController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("contrato/formContrato.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
-            throw new ServletException("⚠️ Error al cargar el formulario de edición de contrato", e);
+            throw new ServletException("⚠ Error al cargar el formulario de edición de contrato", e);
         }
     }
 
@@ -113,7 +123,8 @@ public class ContratoController extends HttpServlet {
 
         Contrato contrato = new Contrato(0, titulo, descripcion, ambito, importe, estado, fechaInicio, fechaFin);
         contratoDAO.addContrato(contrato);
-        response.sendRedirect("contrato");
+        // Redirigir tras insertar
+        response.sendRedirect("contrato?action=list");
     }
 
     private void updateContrato(HttpServletRequest request, HttpServletResponse response)
@@ -134,7 +145,7 @@ public class ContratoController extends HttpServlet {
             );
 
             contratoDAO.updateContrato(contrato);
-            response.sendRedirect("contrato");
+            response.sendRedirect("contrato?action=list");
 
         } catch (NumberFormatException | NullPointerException e) {
             System.out.println(" Error: datos incompletos o mal formateados al actualizar contrato.");
@@ -147,7 +158,7 @@ public class ContratoController extends HttpServlet {
             throws SQLException, IOException {
         int contratoId = Integer.parseInt(request.getParameter("idContrato"));
         contratoDAO.deleteContrato(contratoId);
-        response.sendRedirect("contrato");
+        response.sendRedirect("contrato?action=list");
     }
 }
 

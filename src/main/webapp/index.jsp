@@ -10,11 +10,17 @@
 <html>
 <head>
     <title>Inicio - Proyecto Intermodular</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: "Segoe UI", Tahoma, sans-serif;
             background-color: #f5f7fa;
-            background-image: url("img/space.jpg.jpg");
+            background-image: url("img/space.jpg");
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
@@ -24,31 +30,54 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-
         }
 
         header {
-            background-color: #0a3d62;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(10, 61, 98, 0.95);
+            font-family: "Special Gothic Expanded One", Arial, sans-serif;
+            font-weight: 400;
+            font-style: normal;
             color: white;
             padding: 20px 0;
             text-align: center;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
         }
 
+
         .intro {
+            background-color: rgba(10, 61, 98, 0.95);
+            padding: 30px;
+            margin: 40px auto 20px auto;
             max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
+            border-radius: 10px;
             text-align: center;
+            color: #ffffff;
+            box-shadow: none;
+            transition: box-shadow 0.4s ease, background-color 0.4s ease;
         }
 
         .intro h2 {
-            color: #2c3e50;
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .intro p {
-            font-size: 16px;
-            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d0d0d0;
         }
+
+        .intro:hover {
+            background-color: rgba(19, 45, 70, 0.85);
+            box-shadow: 0 0 30px #01c38e88;
+        }
+
 
         .cards {
             display: flex;
@@ -63,7 +92,7 @@
             background-color: white;
             width: 250px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
             transition: transform 0.2s;
@@ -96,8 +125,6 @@
             font-size: 14px;
             color: #666;
             margin-top: auto;
-
-
         }
     </style>
 </head>
@@ -109,9 +136,15 @@
 </header>
 
 <div class="intro">
-    <h2>Bienvenido a tu panel de gestión</h2>
-    <p>Desde aquí puedes administrar todas las entidades relacionadas con los proyectos internacionales de financiación: contratos activos, países participantes y empresas interesadas.</p>
+    <div class="intro-content">
+        <h2>Bienvenido al panel de gestión</h2>
+        <p>
+            Explora contratos internacionales, países financiadores, empresas participantes y sus postulaciones en un solo lugar.
+        </p>
+    </div>
 </div>
+
+
 
 <div class="cards">
     <div class="card">
@@ -136,7 +169,7 @@
     </div>
     <div class="card">
         <h3>Empresas Multinacionales</h3>
-        <p>Pais de operaciones de las empresas</p>
+        <p>País de operaciones de las empresas</p>
         <a href="${pageContext.request.contextPath}/empresaPais">Ver empresas</a>
     </div>
 </div>
@@ -147,5 +180,6 @@
 
 </body>
 </html>
+
 
 
