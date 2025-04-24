@@ -19,7 +19,7 @@
 <div class="container">
   <div class="card shadow-lg">
     <div class="card-header bg-primary text-white">
-      <h4 class="mb-0">${empty pais.id ? "➕ Añadir nuevo país" : "✏️ Editar país existente"}</h4>
+      <h4 class="mb-0">${empty pais.id ? " Añadir nuevo país" : " Editar país existente"}</h4>
     </div>
     <div class="card-body">
       <form action="${pageContext.request.contextPath}/pais" method="post">
@@ -53,8 +53,9 @@
 
         <!-- Botones -->
         <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-success">💾 Guardar</button>
-          <a href="${pageContext.request.contextPath}/pais" class="btn btn-secondary">🔙 Cancelar</a>
+          <button type="submit" class="btn btn-success"> Guardar</button>
+          <a href="${pageContext.request.contextPath}/pais" class="btn btn-secondary"> Cancelar</a>
+          <a href="${pageContext.request.contextPath}/pais" class="btn btn-secondary"> Volver al listado</a>
         </div>
 
       </form>

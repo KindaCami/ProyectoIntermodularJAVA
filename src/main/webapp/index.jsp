@@ -125,7 +125,7 @@
             font-size: 14px;
             color: #666;
             margin-top: auto;
-        }
+
     </style>
 </head>
 <body>

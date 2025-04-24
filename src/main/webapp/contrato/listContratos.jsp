@@ -14,36 +14,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>📄 Lista de Contratos</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-    <meta http-equiv="Pragma" content="no-cache"/>
-    <meta http-equiv="Expires" content="0"/>
-
-    <style>
-        body { font-family: Arial; background: #f8f9fa; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #007bff; color: white; }
-        a.btn {
-            padding: 6px 12px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        a.btn-red {
-            background-color: #dc3545;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Contratos Registrados</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="container mt-5">
 
-<h2>📄 Contratos registrados</h2>
+<h2 class="text-primary mb-4">Contratos Registrados</h2>
 
-<a href="${pageContext.request.contextPath}/contrato?action=new" class="btn">➕ Nuevo Contrato</a>
-<br><br>
+<a href="${pageContext.request.contextPath}/contrato?action=new" class="btn btn-success mb-3">
+    Añadir Contrato
+</a>
 
-<table>
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
     <tr>
         <th>ID</th>
         <th>Título</th>
@@ -54,6 +39,8 @@
         <th>Fin</th>
         <th>Acciones</th>
     </tr>
+    </thead>
+    <tbody>
     <c:forEach var="contrato" items="${contratos}">
         <tr>
             <td>${contrato.id}</td>
@@ -64,13 +51,17 @@
             <td>${contrato.fechaInicio}</td>
             <td>${contrato.fechaFin}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/contrato?action=edit&idContrato=${contrato.id}" class="btn">✏️ Editar</a>
-                <a href="${pageContext.request.contextPath}/contrato?action=delete&idContrato=${contrato.id}" class="btn btn-red" onclick="return confirm('¿Estás seguro de eliminar este contrato?');">🗑️ Eliminar</a>
+                <a href="${pageContext.request.contextPath}/contrato?action=edit&idContrato=${contrato.id}" class="btn btn-sm btn-primary">Editar</a>
+                <a href="${pageContext.request.contextPath}/contrato?action=delete&idContrato=${contrato.id}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este contrato?');">Eliminar</a>
             </td>
         </tr>
     </c:forEach>
+    </tbody>
 </table>
 
+<a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-secondary mt-3">Volver al inicio</a>
+
 </body>
-</html
+</html>
+
 

@@ -6,92 +6,86 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
-  <title>Nueva Postulación</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0a0f33, #1f1a5c);
-      background-size: cover;
-      color: #ffffff;
-    }
-
-    .form-container {
-      background: rgba(0, 0, 50, 0.8);
-      padding: 30px;
-      max-width: 500px;
-      margin: 60px auto;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #ffffff66;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: white;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #00aaff;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #008ecc;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Formulario de Postulación</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="form-container">
-  <h2>Nueva Postulación</h2>
+<body class="bg-light py-5">
 
-  <form action="${pageContext.request.contextPath}/postulacion" method="post">
-    <input type="hidden" name="action" value="${postulacion != null ? 'update' : 'insert'}" />
+<div class="container">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">${empty postulacion ? "Añadir nueva postulación" : "Editar postulación"}</h4>
+    </div>
+    <div class="card-body">
+      <form action="${pageContext.request.contextPath}/postulacion" method="post">
+        <input type="hidden" name="action" value="${empty postulacion ? 'insert' : 'update'}" />
 
-    <label for="empresaId">ID Empresa</label>
-    <input type="text" id="empresaId" name="empresaId" value="${postulacion.empresa.id}" required />
+        <!-- Empresa -->
+        <div class="mb-3">
+          <label for="empresaId" class="form-label">Empresa</label>
+          <select name="empresaId" id="empresaId" class="form-select" ${!empty postulacion ? 'disabled' : ''} required>
+            <c:forEach var="empresa" items="${empresas}">
+              <option value="${empresa.id}"
+                      <c:if test="${postulacion.empresa.id == empresa.id}">selected</c:if>>
+                  ${empresa.nombre}
+              </option>
+            </c:forEach>
+          </select>
+          <c:if test="${!empty postulacion}">
+            <input type="hidden" name="empresaId" value="${postulacion.empresa.id}" />
+          </c:if>
+        </div>
 
-    <label for="contratoId">ID Contrato</label>
-    <input type="number" id="contratoId" name="contratoId" value="${postulacion.contrato.id}" required />
+        <!-- Contrato -->
+        <div class="mb-3">
+          <label for="contratoId" class="form-label">Contrato</label>
+          <select name="contratoId" id="contratoId" class="form-select" ${!empty postulacion ? 'disabled' : ''} required>
+            <c:forEach var="contrato" items="${contratos}">
+              <option value="${contrato.id}"
+                      <c:if test="${postulacion.contrato.id == contrato.id}">selected</c:if>>
+                  ${contrato.titulo}
+              </option>
+            </c:forEach>
+          </select>
+          <c:if test="${!empty postulacion}">
+            <input type="hidden" name="contratoId" value="${postulacion.contrato.id}" />
+          </c:if>
+        </div>
 
-    <label for="propuestaImporte">Propuesta Económica (€)</label>
-    <input type="number" id="propuestaImporte" name="propuestaImporte" step="0.01" value="${postulacion.propuestaImporte}" required />
+        <!-- Propuesta Importe -->
+        <div class="mb-3">
+          <label for="propuestaImporte" class="form-label">Importe de la propuesta (€)</label>
+          <input type="number" step="0.01" id="propuestaImporte" name="propuestaImporte" class="form-control"
+                 value="${postulacion.propuestaImporte}" required>
+        </div>
 
-    <label for="resultado">Resultado</label>
-    <select id="resultado" name="resultado">
-      <option value="pendiente" ${postulacion.resultado == 'pendiente' ? 'selected' : ''}>Pendiente</option>
-      <option value="aceptada" ${postulacion.resultado == 'aceptada' ? 'selected' : ''}>Aceptada</option>
-      <option value="rechazada" ${postulacion.resultado == 'rechazada' ? 'selected' : ''}>Rechazada</option>
-    </select>
+        <!-- Resultado -->
+        <div class="mb-3">
+          <label for="resultado" class="form-label">Resultado</label>
+          <select name="resultado" id="resultado" class="form-select" required>
+            <option value="pendiente" ${postulacion.resultado == 'pendiente' ? 'selected' : ''}>Pendiente</option>
+            <option value="ganada" ${postulacion.resultado == 'ganada' ? 'selected' : ''}>Ganada</option>
+            <option value="rechazada" ${postulacion.resultado == 'rechazada' ? 'selected' : ''}>Rechazada</option>
+          </select>
+        </div>
 
-    <button type="submit"> Guardar Postulación</button>
-  </form>
+        <!-- Botones -->
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <a href="${pageContext.request.contextPath}/postulacion" class="btn btn-secondary">Cancelar</a>
+          <a href="${pageContext.request.contextPath}/postulacion" class="btn btn-secondary">Volver al listado</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div>
+
 </body>
 </html>
+

@@ -4,6 +4,8 @@ import com.proyecto.proyectointermodular.BBDD.DAO.PostulacionDAO;
 import com.proyecto.proyectointermodular.models.Postulacion;
 import com.proyecto.proyectointermodular.models.Contrato;
 import com.proyecto.proyectointermodular.models.Empresa;
+import com.proyecto.proyectointermodular.BBDD.DAO.EmpresaDAO;
+import com.proyecto.proyectointermodular.BBDD.DAO.ContratoDAO;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -12,13 +14,19 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+
 @WebServlet(name = "PostulacionController", urlPatterns = {"/postulacion"})
 public class PostulacionController extends HttpServlet {
 
     private PostulacionDAO postulacionDAO;
+    private EmpresaDAO empresaDAO;
+    private ContratoDAO contratoDAO;
 
     @Override
     public void init() throws ServletException {
+        postulacionDAO = new PostulacionDAO();
+        empresaDAO = new EmpresaDAO();
+        contratoDAO = new ContratoDAO();
         postulacionDAO = new PostulacionDAO();
     }
 
@@ -76,6 +84,12 @@ public class PostulacionController extends HttpServlet {
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Empresa> empresas = empresaDAO.listarEmpresas();
+        List<Contrato> contratos = contratoDAO.listarContratos();
+
+        request.setAttribute("empresas", empresas);
+        request.setAttribute("contratos", contratos);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("postulacion/formPostulacion.jsp");
         dispatcher.forward(request, response);
     }
@@ -84,11 +98,19 @@ public class PostulacionController extends HttpServlet {
             throws ServletException, IOException {
         String empresaId = request.getParameter("empresaId");
         int contratoId = Integer.parseInt(request.getParameter("contratoId"));
+
         Postulacion postulacion = postulacionDAO.getPostulacion(empresaId, contratoId);
+        List<Empresa> empresas = empresaDAO.listarEmpresas();
+        List<Contrato> contratos = contratoDAO.listarContratos();
+
         request.setAttribute("postulacion", postulacion);
+        request.setAttribute("empresas", empresas);
+        request.setAttribute("contratos", contratos);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("postulacion/formPostulacion.jsp");
         dispatcher.forward(request, response);
     }
+
 
     private void insertPostulacion(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -106,6 +128,10 @@ public class PostulacionController extends HttpServlet {
         postulacionDAO.insertarPostulacion(postulacion);
         response.sendRedirect("postulacion");
     }
+      //  Lógica pendiente para determinar automáticamente el resultado de la postulación
+      // Ejemplo: Si propuesta <= presupuesto disponible del contrato => resultado = "ganada", sino "rechazada
+      // Por ahora debe guardarse como "pendiente"
+
 
     private void updatePostulacion(HttpServletRequest request, HttpServletResponse response)
             throws IOException {

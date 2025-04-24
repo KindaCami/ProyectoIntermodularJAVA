@@ -9,108 +9,47 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Relaciones Empresa - País</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f9;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      color: #2c3e50;
-      margin-bottom: 25px;
-    }
-
-    .add-button {
-      display: inline-block;
-      margin-bottom: 20px;
-      background-color: #28a745;
-      color: white;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .add-button:hover {
-      background-color: #218838;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #2980b9;
-      color: white;
-    }
-
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-
-    .acciones a {
-      text-decoration: none;
-      margin-right: 10px;
-      color: #3498db;
-      font-weight: bold;
-    }
-
-    .acciones a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="container">
-  <h2>Ubicacion de las Empresas</h2>
+<body class="container mt-5">
 
-  <a href="${pageContext.request.contextPath}/empresaPais?action=add" class="add-button">Añadir Relación</a>
+<h2 class="text-primary mb-4">Ubicación de las Empresas</h2>
 
-  <table>
-    <thead>
+<a href="${pageContext.request.contextPath}/empresaPais?action=add" class="btn btn-success mb-3">
+  Añadir Relación
+</a>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+  <tr>
+    <th>Empresa</th>
+    <th>ID Empresa</th>
+    <th>País</th>
+    <th>ID País</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <c:forEach var="relacion" items="${relaciones}">
     <tr>
-      <th>Empresa</th>
-      <th>ID Empresa</th>
-      <th>País</th>
-      <th>ID País</th>
-      <th>Acciones</th>
+      <td>${relacion.empresaNombre}</td>
+      <td>${relacion.empresaId}</td>
+      <td>${relacion.paisNombre}</td>
+      <td>${relacion.paisId}</td>
+      <td>
+        <a href="${pageContext.request.contextPath}/empresaPais?action=delete&empresaId=${relacion.empresaId}&paisId=${relacion.paisId}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta relación?');">
+          Eliminar
+        </a>
+      </td>
     </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="relacion" items="${relaciones}">
-      <tr>
-        <td>${relacion.empresaNombre}</td>
-        <td>${relacion.empresaId}</td>
-        <td>${relacion.paisNombre}</td>
-        <td>${relacion.paisId}</td>
-        <td class="acciones">
-          <a href="${pageContext.request.contextPath}/empresaPais?action=delete&empresaId=${relacion.empresaId}&paisId=${relacion.paisId}"
-             onclick="return confirm('¿Estás seguro de eliminar esta relación?');"> Eliminar</a>
-        </td>
-      </tr>
-    </c:forEach>
-    </tbody>
-  </table>
-</div>
+  </c:forEach>
+  </tbody>
+</table>
+
+<a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-secondary mt-3">Volver al inicio</a>
+
 </body>
 </html>

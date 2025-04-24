@@ -115,26 +115,31 @@ public class EmpresaDAO {
         }
     }
 // Borrar empresas
-        public boolean deleteEmpresa(String idEmpresa) {
-            String sql = "DELETE FROM empresa WHERE idEmpresa = ?";
+public boolean deleteEmpresa(String idEmpresa) {
+    String sql = "DELETE FROM empresa WHERE idEmpresa = ?";
 
-            try (Connection conn = BBDDConnector.getInstance().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, idEmpresa);
+    try (Connection conn = BBDDConnector.getInstance().getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, idEmpresa);
 
-                int filasEliminadas = ps.executeUpdate();
-                if (filasEliminadas > 0) {
-                    System.out.println(" Empresa eliminada correctamente.");
-                    return true;
-                } else {
-                    System.out.println(" No se encontró empresa con ese ID.");
-                    return false;
-                }
-
-            } catch (SQLException e) {
-                System.out.println(" Error al eliminar empresa: " + e.getMessage());
-                return false;
-            }
+        int filasEliminadas = ps.executeUpdate();
+        if (filasEliminadas > 0) {
+            System.out.println(" Empresa eliminada correctamente.");
+            return true;
+        } else {
+            System.out.println(" No se encontró empresa con ese ID.");
+            return false;
         }
 
+    } catch (SQLException e) {
+        System.out.println(" Error al eliminar empresa: " + e.getMessage());
+        return false;
+    }
+    }
 }
+
+
+
+
+
+
