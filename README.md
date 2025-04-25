@@ -89,7 +89,7 @@ primero hay que eliminar esas relaciones manualmente para evitar incoherencias y
 puede borrar un pais que no tenga ningua empresa asociada.
 (PARA MAS INFO VEASE EL SCRIPT O LA IMAGEN DEL DIAGRAMA DE LA BBDD MySQL).
 
-##  Posibles dudas sobre algunos atributos de pais, contrato y postulacion:
+##  Posibles dudas sobre algunos atributos de pais, contrato, contratoPais y postulacion:
 
 - Pais -> presupuesto_total: Es el importe maximo de dinero que un pais ha destinado o reservado para invertir en contratos
 internacionales(espacial, defensa, ID+i, etc).
@@ -105,4 +105,6 @@ En una logica avanzada (que puedo implementar mas adelante) podria:
 Comparar todas las postulaciones de un contrato, evaluar si una propuesta es menor o igual al importe del contrato,
 marcar automaticamente esa postulacion como ganadora (resultado = "ganada), o rechazar las que superen
 el presupuesto.
+- contratoPais -> aporte: Es lo que cada país ha invertido en un proyecto en especifico.
 
+Para mas información sobre el analisis de ESPACE, lea las memorias adjuntadas.
