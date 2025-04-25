@@ -28,10 +28,17 @@ public class ContratoPaisDAO {
         }
     }
 
-    // SELECT: obtener todos
+    // SELECT:
     public List<ContratoPais> listarRelaciones() {
         List<ContratoPais> relaciones = new ArrayList<>();
-        String sql = "SELECT * FROM contrato_pais";
+        String sql =
+                "SELECT cp.aporte, " +
+                        "c.idContrato AS contrato_id, c.titulo AS contrato_titulo, " +
+                        "p.idPais AS pais_id, p.nombre AS pais_nombre " +
+                        "FROM contrato_pais cp " +
+                        "JOIN contrato c ON cp.contrato_id = c.idContrato " +
+                        "JOIN pais p ON cp.pais_id = p.idPais";
+
         try (Connection conn = BBDDConnector.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -39,9 +46,11 @@ public class ContratoPaisDAO {
             while (rs.next()) {
                 Contrato contrato = new Contrato();
                 contrato.setId(rs.getInt("contrato_id"));
+                contrato.setTitulo(rs.getString("contrato_titulo"));
 
                 Pais pais = new Pais();
                 pais.setId(rs.getString("pais_id"));
+                pais.setNombre(rs.getString("pais_nombre"));
 
                 BigDecimal aporte = rs.getBigDecimal("aporte");
                 if (aporte == null) aporte = BigDecimal.ZERO;
@@ -52,6 +61,7 @@ public class ContratoPaisDAO {
         } catch (SQLException e) {
             System.out.println(" Error al listar relaciones: " + e.getMessage());
         }
+
         return relaciones;
     }
 
@@ -65,7 +75,7 @@ public class ContratoPaisDAO {
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar relación: " + e.getMessage());
+            System.out.println(" Error al eliminar relación: " + e.getMessage());
             return false;
         }
     }
@@ -85,6 +95,7 @@ public class ContratoPaisDAO {
             return false;
         }
     }
+
     // Metodo para calcular el total que un pais aporta
     public BigDecimal calcularImporteContrato(int contratoId) {
         String sql = "SELECT SUM(aporte) AS total FROM contrato_pais WHERE contrato_id = ?";
@@ -104,6 +115,8 @@ public class ContratoPaisDAO {
 
         return total;
     }
+
+    // Obtener relación específica (para editar)
     public ContratoPais getRelacion(int contratoId, String paisId) {
         String sql = "SELECT * FROM contrato_pais WHERE contrato_id = ? AND pais_id = ?";
         try (Connection conn = BBDDConnector.getInstance().getConnection();
@@ -127,9 +140,29 @@ public class ContratoPaisDAO {
         return null;
     }
 
+    // Metodo para no insertar duplicados
+    public boolean existeRelacion(int contratoId, String paisId) {
+        String sql = "SELECT COUNT(*) AS total FROM contrato_pais WHERE contrato_id = ? AND pais_id = ?";
 
+        try (Connection conn = BBDDConnector.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
+            ps.setInt(1, contratoId);
+            ps.setString(2, paisId);
 
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int total = rs.getInt("total");
+                    return total > 0;  // Si hay al menos 1 registro, existe
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println(" Error al comprobar existencia de relación contrato-pais: " + e.getMessage());
+        }
+        return false;
+    }
 
 }
+
 

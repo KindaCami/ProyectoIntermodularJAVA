@@ -32,7 +32,7 @@ public class BBDDConnector {
     private void conectar() {
         try {
             connection = DriverManager.getConnection(JDBC_URL, props);
-            System.out.println("✅ Conexión exitosa a la base de datos.");
+            System.out.println(" Conexión exitosa a la base de datos.");
         } catch (SQLException e) {
             System.out.println(" Error al conectar con la base de datos:");
             e.printStackTrace();
@@ -51,11 +51,11 @@ public class BBDDConnector {
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
-                System.out.println("🔄 La conexión estaba cerrada. Reconectando...");
+                System.out.println(" La conexión estaba cerrada. Reconectando...");
                 conectar();
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error al verificar la conexión:");
+            System.out.println(" Error al verificar la conexión:");
             e.printStackTrace();
         }
         return connection;

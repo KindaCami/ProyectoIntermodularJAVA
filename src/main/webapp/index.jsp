@@ -117,6 +117,11 @@
             text-decoration: none;
             font-weight: bold;
         }
+        .card p {
+            color: #333;
+            font-size: 14px;
+        }
+
 
         footer {
             background-color: #dfe6e9;
@@ -166,6 +171,11 @@
         <h3>Postulaciones</h3>
         <p>Gestiona las postulaciones a contratos</p>
         <a href="${pageContext.request.contextPath}/postulacion">Ver postulaciones</a>
+    </div>
+    <div class="card">
+        <h3>Financiación por país</h3>
+        <p>Consulta y gestiona los aportes económicos que cada país realiza en los contratos.</p>
+        <a href="${pageContext.request.contextPath}/contratoPais">Ver aportes</a>
     </div>
     <div class="card">
         <h3>Empresas Multinacionales</h3>
