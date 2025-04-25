@@ -40,6 +40,31 @@ Una aplicación Java con JSP, Servlets y JDBC para la gestión de contratos inte
 - Maven
 - Git
 
+##  Pruebas con JUnit
+Se han implementado test unitarios utilizando JUnit para asegurar el correcto funcionamiento de las operaciones CRUD
+sobre la entiedad Postulacion y Contrato. Cubren los siguientes casos:
+
+1. Insercion
+2. Verificacion de existencia
+3. Recuperacion de una postulacion especifica
+4. Actualizacion del resultado de la postulacion
+5. Listado de todas las postulaciones
+6. Eliminacion de una postulacion
+7. Insertar y obtener un contrato
+
+## Manejo de errores
+A lo largo del proyecto he implementado manejo de errores y alguna validacion de forma basica:
+1. En los DAOs mediante try-catch
+2. En varios form.jsp usando validaciones HTML.
+3. En el backend algunas validaciones de forma logica, como comprobar si un ID es null o si ResultSet tiene datos antes de
+construir un objeto.
+
+Faltarian validaciones del servidor mas robustas, como:
+1. Evitar string vacios, validar rangos de numeracion:
+(presupuestoAsignado < presupuestoTotal), validar formatis (ID alfanumericos, por ejemplo).
+2. Mensajes mas claros en los JSP (mostrar mensaje si el usuario deja un campo vacio), Mostrar errores de insercio(si una empresa ya existe).
+
+ 
 
 
 
