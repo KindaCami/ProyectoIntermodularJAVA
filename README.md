@@ -82,19 +82,27 @@ Faltarian validaciones del servidor mas robustas, como:
    - Asegúrate de que el proyecto esté empaquetado como .war.
 
 ##  Posibles dudas y errores ejecutando el programa:
+
 1. No se puede eliminar una empresa que esté unida a un contrato, una postulacion o una empresa multinacional (empresa_pais)
 primero hay que eliminar esas relaciones manualmente para evitar incoherencias y fuga de datos en la BBDD.
 2. No se pueden borrar los paises, primero hay que eliminar las relaciones entre empresas, puesto que existen restricciones de clave foranea para proteger la integridad de la app. Solo se
 puede borrar un pais que no tenga ningua empresa asociada.
 (PARA MAS INFO VEASE EL SCRIPT O LA IMAGEN DEL DIAGRAMA DE LA BBDD MySQL).
-3. Posibles dudas con los atributos de pais:
-- presupuesto_total: Es el importe maximo de dinero que un pais ha destinado o reservado para invertir en contratos
+
+##  Posibles dudas sobre algunos atributos de pais, contrato y postulacion:
+
+- Pais -> presupuesto_total: Es el importe maximo de dinero que un pais ha destinado o reservado para invertir en contratos
 internacionales(espacial, defensa, ID+i, etc).
 Ej: España tiene un presupuesto de 1 millon de euros para invertir en contratos.
-- presupuesto_asignado: Es el importe que se ha comprometido (o repartido) entre los contratos en los que el pais participa.
+- Pais -> presupuesto_asignado: Es el importe que se ha comprometido (o repartido) entre los contratos en los que el pais participa.
 Se puede usar para mostrar cuanto queda disponible (total - asignado), tambien validar si un contrato cabe en el presupuesto restante.
 Ej: Si españa ha asigando 500 mil euros a varios contratos, le quedarian 500 mil disponibles para otros.
 (TODO EL PRESUPUESTO SE USA DE FORMA INFORMATIVA Y NO ESTA AUTOMATIZADO) En un escenario ideal, al añadir un pais a un contrato con una cantidad, esa cantidad se suma al presupuesto asignado.
-
-
+- Contrato -> importe: Es el coste total y real de un contrato. Ej: Si un contrato como lanzar un satelite al espacio, y el gobierno destina 200 mil para ello, ese seria el importe del contrato. importe = presupuesto total del contrato.
+- Postulacion -> propuesta_importe: Cuando una empresa se postula a un contrato, propone una cantidad de dinero para llevarlo a cabo.
+Esa propuesta es el importe o propuesta_importe en la BBDD.
+En una logica avanzada (que puedo implementar mas adelante) podria: 
+Comparar todas las postulaciones de un contrato, evaluar si una propuesta es menor o igual al importe del contrato,
+marcar automaticamente esa postulacion como ganadora (resultado = "ganada), o rechazar las que superen
+el presupuesto.
 
