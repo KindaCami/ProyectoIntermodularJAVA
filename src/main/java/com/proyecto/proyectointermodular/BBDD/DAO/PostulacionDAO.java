@@ -66,20 +66,19 @@ public class PostulacionDAO {
     }
 
     // UPDATE
-    public boolean actualizarResultado(Postulacion postulacion) {
-        String sql = "UPDATE postulacion SET propuesta_importe = ?, resultado = ? WHERE empresa_id = ? AND contrato_id = ?";
+    public boolean actualizarResultado(String empresaId, int contratoId, String nuevoResultado) {
+        String sql = "UPDATE postulacion SET resultado = ? WHERE empresa_id = ? AND contrato_id = ?";
         try (Connection conn = BBDDConnector.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setBigDecimal(1, postulacion.getPropuestaImporte());
-            ps.setString(2, postulacion.getResultado());
-            ps.setString(3, postulacion.getEmpresa().getId());
-            ps.setInt(4, postulacion.getContrato().getId());
+            ps.setString(1, nuevoResultado);
+            ps.setString(2, empresaId);
+            ps.setInt(3, contratoId);
 
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al actualizar postulación: " + e.getMessage());
+            System.out.println(" Error al actualizar resultado de la postulación: " + e.getMessage());
             return false;
         }
     }

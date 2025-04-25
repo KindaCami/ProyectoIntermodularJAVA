@@ -147,7 +147,12 @@ public class PostulacionController extends HttpServlet {
         postulacion.setPropuestaImporte(propuesta);
         postulacion.setResultado(resultado);
 
-        postulacionDAO.actualizarResultado(postulacion);
+        postulacionDAO.actualizarResultado(
+                postulacion.getEmpresa().getId(),
+                postulacion.getContrato().getId(),
+                postulacion.getResultado()
+        );
+
         response.sendRedirect("postulacion");
     }
 
